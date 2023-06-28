@@ -4,8 +4,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 import {useForm} from "@inertiajs/vue3";
 import DivisionForm from "@/Pages/Division/Partials/DivisionForm.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
+import {store} from "@/store/store.js";
+import Appbar from "@/Layouts/Partials/Appbar.vue";
+import Icon from "@/Components/Icon.vue";
 
 const props = defineProps({
     division: Object
@@ -13,32 +15,29 @@ const props = defineProps({
 
 const form = useForm(props.division);
 
+const submit = () => {
+    store.update(form)
+}
+
 const destroy = () => {
-    confirm('Are you sure?')
-        ? form.delete(route('division.destroy', props.division))
-        : null;
+    store.destroy(form)
 }
 
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <form class="p-4" @submit.prevent="form.put(route('division.update', division))">
+    <AuthenticatedLayout :item="division">
 
+        <Appbar>
+            <DangerButton @click="destroy">
+                {{ $t('destroy') }}
+            </DangerButton>
+        </Appbar>
+
+        <form class="p-4" @submit.prevent="submit">
             <DivisionForm :form="form"/>
-
-            <div class="flex justify-between">
-
-                <DangerButton type="button" @click="destroy">
-                    {{ $t('delete') }}
-                </DangerButton>
-
-                <PrimaryButton>
-                    {{ $t('save') }}
-                </PrimaryButton>
-
-            </div>
         </form>
+
     </AuthenticatedLayout>
 </template>
 

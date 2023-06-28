@@ -1,9 +1,10 @@
 <script setup>
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import {router, useForm} from "@inertiajs/vue3";
 import DivisionForm from "@/Pages/Division/Partials/DivisionForm.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+import {store} from "@/store/store.js";
 
 const form = useForm({
     title: '',
@@ -11,15 +12,16 @@ const form = useForm({
     available: false
 });
 
+const submit = () => {
+    store.store(form)
+}
+
 </script>
 
 <template>
-    <AuthenticatedLayout title="Разделы" action="Создание" icon="folder">
-        <form class="p-4" @submit.prevent="form.post(route('division.store'))">
+    <AuthenticatedLayout>
+        <form class="p-4" @submit.prevent="submit">
             <DivisionForm :form="form"/>
-            <PrimaryButton>
-                Submit
-            </PrimaryButton>
         </form>
     </AuthenticatedLayout>
 </template>

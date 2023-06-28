@@ -3,27 +3,25 @@ import '../css/app.css';
 
 import { i18nVue } from 'laravel-vue-i18n'
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
+import {createInertiaApp, router} from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
-import routeHelper from "@/helpers/routeHelper.js";
+import {store} from "@/store/store.js";
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-const myMixin = {
-    methods: {
-        hello() {
-            console.log('привет из примеси!')
-        }
-    }
-}
+router.on('navigate', () => {
+    store.setController()
+    store.setAction()
+})
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    mixins: [myMixin],
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(router)
             .use(ZiggyVue, Ziggy)
             .use(i18nVue, {
                 resolve: async lang => {
