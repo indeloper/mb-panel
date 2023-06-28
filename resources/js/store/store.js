@@ -69,7 +69,7 @@ export const store = reactive({
             })
     },
 
-    update(form) {
+    update(form, redirectRoute = null) {
 
         this.loading = true;
         NProgress.start()
@@ -77,13 +77,16 @@ export const store = reactive({
         axios.put(route('api.' + this.controller + '.update', form), form)
             .then(response => {
 
-                this.setMessage(response.data.message, 'success')
+                if (redirectRoute) {
+                    router.visit(redirectRoute)
+                }
+                // this.setMessage(response.data.message, 'success')
 
             })
             .catch(error => {
 
                 NProgress.remove()
-                this.setMessage(error.response.data.message, 'error')
+                // this.setMessage(error.response.data.message, 'error')
 
             })
             .finally(() => {
@@ -119,9 +122,10 @@ export const store = reactive({
                                     if (result.isDismissed) {
                                         this.restore(form)
                                     }
-                                })
-                                .finally(() => {
-                                    router.visit(route(this.controller + '.index'))
+
+                                    if (result.isConfirmed) {
+                                        router.visit(route(this.controller + '.index'))
+                                    }
                                 })
                         })
                         .catch(error => {

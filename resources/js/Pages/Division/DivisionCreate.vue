@@ -5,6 +5,7 @@ import {router, useForm} from "@inertiajs/vue3";
 import DivisionForm from "@/Pages/Division/Partials/DivisionForm.vue";
 import Swal from "sweetalert2";
 import {store} from "@/store/store.js";
+import Appbar from "@/Layouts/Partials/Appbar.vue";
 
 const form = useForm({
     title: '',
@@ -20,6 +21,9 @@ const submit = () => {
 
 <template>
     <AuthenticatedLayout>
+
+        <Appbar/>
+
         <form class="p-4" @submit.prevent="submit">
             <DivisionForm :form="form"/>
         </form>

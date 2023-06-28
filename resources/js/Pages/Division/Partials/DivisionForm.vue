@@ -7,8 +7,12 @@ import Checkbox from "@/Components/Checkbox.vue";
 import Textarea from "@/Components/Textarea.vue";
 import Swal from "sweetalert2";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 import {store} from "@/store/store.js";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Switch from "@/Components/Switch.vue";
+import DropdownButton from "@/Components/DropdownButton.vue";
+import DropdownItem from "@/Components/Dropdown/Partials/DropdownItem.vue";
 
 const props = defineProps({
     form: {
@@ -54,17 +58,9 @@ const props = defineProps({
     </div>
 
     <div class="mb-4">
-        <Checkbox name="available"
-                  v-model:checked="form.available"
-                  :disabled="store.loading"/>
-
-        <span class="ml-2 text-sm text-gray-600">Available</span>
-    </div>
-
-    <div class="mb-4">
-        <PrimaryButton :disabled="store.loading">
-            <span>Submit</span>
-        </PrimaryButton>
+        <Switch v-model:checked="form.available"
+                :disabled="store.loading"
+                label="Available"/>
     </div>
 
 </template>

@@ -7,13 +7,17 @@ import {createInertiaApp, router} from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {store} from "@/store/store.js";
+import NProgress from "nprogress";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
+router.on("start", () => NProgress.start())
 router.on('navigate', () => {
     store.setController()
     store.setAction()
 })
+
+router.on("end", () => NProgress.done())
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

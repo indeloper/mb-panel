@@ -28,9 +28,6 @@ import DropdownItem from "@/Components/Dropdown/Partials/DropdownItem.vue";
                     <span>
                         <b>{{ $t(store.controller) }}</b>
                     </span>
-                    <span v-if="store.action && store.action !== store.controller">
-                        | {{ $t('.' + store.action) }}
-                    </span>
                 </div>
 
                 <div :class="{'hidden': !store.message}"

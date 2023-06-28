@@ -2,6 +2,7 @@
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Table from "@/Components/Table/Table.vue";
+import Appbar from "@/Layouts/Partials/Appbar.vue";
 
 const props = defineProps({
     divisions: Object
@@ -10,6 +11,9 @@ const props = defineProps({
 
 <template>
     <AuthenticatedLayout>
+
+        <Appbar/>
+
         <div class="p-6">
             <Table :items="divisions"
                    :fields="['title']"
