@@ -11,6 +11,7 @@ import Icon from "@/Components/Icon.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import DropdownItem from "@/Components/Dropdown/Partials/DropdownItem.vue";
 import DropdownButton from "@/Components/DropdownButton.vue";
+import Swal from "sweetalert2";
 
 const props = defineProps({
     division: Object
@@ -19,7 +20,7 @@ const props = defineProps({
 const form = useForm(props.division);
 
 const submit = () => {
-    store.update(form, route(store.controller + '.index'))
+    store.update(form)
 }
 
 const destroy = () => {
@@ -44,12 +45,15 @@ const destroy = () => {
                         {{ $t('Save') }}
                     </template>
                     <template #items>
-                        <DropdownItem @click="store.update(form)">
+                        <DropdownItem @click="store.update(form, false)">
                             {{ $t('Save and continue') }}
                         </DropdownItem>
                     </template>
                 </DropdownButton>
-                <SecondaryButton type="submit" :disabled="store.loading">
+                <SecondaryButton type="button"
+                                 :disabled="store.loading"
+                                 @click="router.visit(route(store.controller + '.index'))"
+                >
                     {{ $t('Cancel') }}
                 </SecondaryButton>
             </div>

@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import {router} from "@inertiajs/vue3";
 import axios from "axios";
 import NProgress from 'nprogress'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export const store = reactive({
 
@@ -69,7 +70,7 @@ export const store = reactive({
             })
     },
 
-    update(form, redirectRoute = null) {
+    update(form, redirect = true) {
 
         this.loading = true;
         NProgress.start()
@@ -77,8 +78,8 @@ export const store = reactive({
         axios.put(route('api.' + this.controller + '.update', form), form)
             .then(response => {
 
-                if (redirectRoute) {
-                    router.visit(redirectRoute)
+                if (redirect) {
+                    router.visit(route(this.controller + '.index'))
                 }
                 // this.setMessage(response.data.message, 'success')
 

@@ -1,12 +1,8 @@
 <script setup>
 
-import DangerButton from "@/Components/DangerButton.vue";
 import {store} from "@/store/store.js";
 import Dropdown from "@/Components/Dropdown/Dropdown.vue";
 import Icon from "@/Components/Icon.vue";
-import DropdownLink from "@/Components/Dropdown/Partials/DropdownLink.vue";
-import {router} from "@inertiajs/vue3";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import DropdownItem from "@/Components/Dropdown/Partials/DropdownItem.vue";
 
 const props = defineProps({
@@ -26,13 +22,13 @@ const props = defineProps({
         </div>
 
 
-        <Dropdown>
+        <Dropdown v-if="item">
             <template #trigger>
                 <Icon name="actions"/>
             </template>
             <template #content>
 
-                <DropdownItem v-if="route().has(store.controller + '.destroy') && item"
+                <DropdownItem v-if="route().has(store.controller + '.destroy')"
                               @click="store.destroy(item)"
                 >
                     {{ $t('destroy') }}

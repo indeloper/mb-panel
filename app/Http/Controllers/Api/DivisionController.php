@@ -3,24 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Division\StoreRequest;
-use App\Http\Requests\Division\UpdateRequest;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Division;
-use Illuminate\Http\Request;
 
 class DivisionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRequest $request)
     {
         $division = Division::query()
@@ -32,17 +20,6 @@ class DivisionController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Division $division)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRequest $request, Division $division)
     {
         $division->update($request->validated());
@@ -53,9 +30,6 @@ class DivisionController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Division $division)
     {
         $division->delete();
@@ -76,17 +50,21 @@ class DivisionController extends Controller
 
     public function available(int $id)
     {
-        Division::find($id)->update(['available' => !Division::find($id)->available]);
+        $division = Division::find($id);
+        $division->update(['available' => !$division->available]);
 
         return response()->json([
             'message' => 'Updated'
         ]);
     }
 
+
     public function trashed(int $id)
     {
+        $isTrashed = Division::withTrashed()->find($id)->trashed();
+
         return response()->json([
-            'data' => Division::withTrashed()->find($id)->trashed(),
+            'data' => $isTrashed,
         ]);
     }
 }

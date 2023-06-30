@@ -1,18 +1,11 @@
 <script setup>
 
+import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
-import InputError from "@/Components/InputError.vue";
-import Checkbox from "@/Components/Checkbox.vue";
-import Textarea from "@/Components/Textarea.vue";
-import Swal from "sweetalert2";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {router, useForm} from "@inertiajs/vue3";
+import Textarea from "@/Components/Form/Textarea.vue";
 import {store} from "@/store/store.js";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Switch from "@/Components/Switch.vue";
-import DropdownButton from "@/Components/DropdownButton.vue";
-import DropdownItem from "@/Components/Dropdown/Partials/DropdownItem.vue";
 
 const props = defineProps({
     form: {
@@ -27,7 +20,7 @@ const props = defineProps({
 
     <div class="mb-4">
         <InputLabel for="title"
-                    value="Наименование"/>
+                    :value="$t('title')"/>
 
         <TextInput
             id="title"
@@ -46,9 +39,10 @@ const props = defineProps({
 
     <div class="mb-4">
         <InputLabel for="description"
-                    value="Описание"/>
+                    :value="$t('description')"/>
 
         <Textarea id="description"
+                  editor
                   v-model="form.description"
                   class="mt-1 block w-full transition ease-in-out disabled:bg-gray-200"
                   :disabled="store.loading"/>

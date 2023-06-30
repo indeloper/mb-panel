@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
+    <Link :href="href">
         <li class="flex items-center">
             <slot/>
             <span class="hidden md:block">
